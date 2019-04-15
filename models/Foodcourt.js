@@ -44,8 +44,7 @@ const FoodcourtSchema = new Schema({
         data: Buffer,
         contentType: String
     }
-
 });
 
-var Foodcourt = mongoose.model('Foodcourt', FoodcourtSchema, 'admin_foodcourt');
-module.exports = Foodcourt;
+var Foodcourts = mongoose.model('Foodcourts', FoodcourtSchema, 'manage_foodcourts');
+module.exports = Foodcourts;
