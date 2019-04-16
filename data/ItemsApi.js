@@ -1,15 +1,6 @@
-var mongoose = require('../models/Mongoose');
 var Items = require('../models/Item');
 var fs = require('fs');
 var imgPath = '/Users/Siva Cheerla/Downloads/img1.jpg';
-
-// establishing connection
-mongoose.on('error', function (err) {
-    console.log('Connection error', err);
-});
-mongoose.once('open', function () {
-    console.log('Connected to DB.');
-});
 
 module.exports = {
 
@@ -35,7 +26,7 @@ module.exports = {
 
     // Get single item by ID
     getItem: function (req, res, next) {
-        Items.find({ id: 11001 }, function (err, response) {
+        Items.find({ id: req.params.id }, function (err, response) {
             if (err) {
                 console.log(err);
             } else {
@@ -96,7 +87,7 @@ module.exports = {
     // Updating item by ID
     updateItem: function (req, res, next) {
         Items.findOneAndUpdate({
-            id: 11001
+            id: req.params.id
         }, {
                 $set: {
                     name: 'Chicken Sandwich',
@@ -121,7 +112,7 @@ module.exports = {
     // Deleting an existing item
     deleteItem: function (req, res, next) {
         Items.findOneAndDelete({
-            id: 11001
+            id: req.params.id
         }, function (err, response) {
             if (err)
                 return console.log(err);

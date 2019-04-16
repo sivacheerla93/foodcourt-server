@@ -23,7 +23,7 @@ router.put('/items/:id', function (req, res, next) {
 });
 
 //Delete item route
-router.delete('/foodcourts/:id', function (req, res, next) {
+router.delete('/items/:id', function (req, res, next) {
     itemsApi.deleteItem(req, res, next);
 });
 

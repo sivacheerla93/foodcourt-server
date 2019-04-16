@@ -26,5 +26,5 @@ const ItemSchema = new Schema({
     }
 });
 
-var Item = mongoose.model('Item', ItemSchema, 'item_foodcourt');
+var Item = mongoose.model('Item', ItemSchema, 'manage_items');
 module.exports = Item;

@@ -1,17 +1,8 @@
-var mongoose = require('../models/Mongoose');
 var Foodcourts = require('../models/Foodcourt');
 var bcrypt = require('bcrypt');
 var BCRYPT_SALT_ROUNDS = 12;
 var fs = require('fs');
 var imgPath = '/Users/Siva Cheerla/Downloads/img1.jpg';
-
-// establishing connection
-mongoose.on('error', function (err) {
-    console.log('Connection error', err);
-});
-mongoose.once('open', function () {
-    console.log('Connected to DB.');
-});
 
 module.exports = {
 
