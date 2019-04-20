@@ -98,22 +98,22 @@ module.exports = {
 
     // Updating foodcourt by ID
     updateFoodcourt: function (req, res, next) {
-        bcrypt.hash('Mypwd@123', BCRYPT_SALT_ROUNDS).then(function (hashedPassword) {
+        bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS).then(function (hashedPassword) {
             Foodcourts.findOneAndUpdate({
                 id: req.params.id
             }, {
                     $set: {
-                        name: 'KFC T. Nagar',
-                        gst: 'GSTAP12345668',
-                        validity: '14th April, 2020',
+                        name: req.body.name,
+                        gst: req.body.gst,
+                        validity: req.body.validity,
                         contact: {
-                            email: 'kfc.chennai@foodcourt.in',
-                            mobile: '1234567890'
+                            email: req.body.email,
+                            mobile: req.body.mobile
                         },
                         password: hashedPassword,
                         address: {
-                            locality: 'T. Nagar',
-                            city: 'Chennai'
+                            locality: req.body.locality,
+                            city: req.body.city
                         },
                         img: {
                             data: fs.readFileSync(imgPath),
