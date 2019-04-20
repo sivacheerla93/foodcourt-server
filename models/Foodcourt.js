@@ -4,38 +4,14 @@ const Schema = mongoose.Schema;
 
 const FoodcourtSchema = new Schema({
     id: Number,
-    name: {
-        type: String,
-        trim: true,
-        required: true,
-    },
-    gst: {
-        type: String,
-        trim: true,
-        required: true,
-    },
-    validity: {
-        type: String,
-        trim: true,
-        required: true,
-    },
+    name: String,
+    gst: String,
+    validity: String,
     contact: {
-        email: {
-            type: String,
-            trim: true,
-            required: true
-        },
-        mobile: {
-            type: String,
-            trim: true,
-            required: true
-        }
+        email: String,
+        mobile: String
     },
-    password: {
-        type: String,
-        trim: true,
-        required: true
-    },
+    password: String,
     address: {
         locality: String,
         city: String
