@@ -5,21 +5,9 @@ const Schema = mongoose.Schema;
 const ItemSchema = new Schema({
     id: Number,
     foodcourt_id: Number,
-    name: {
-        type: String,
-        trim: true,
-        required: true,
-    },
-    price: {
-        type: String,
-        trim: true,
-        required: true,
-    },
-    availability: {
-        type: String,
-        trim: true,
-        required: true,
-    },
+    name: String,
+    price: String,
+    availability: String,
     img: {
         data: Buffer,
         contentType: String

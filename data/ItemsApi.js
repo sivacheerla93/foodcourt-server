@@ -1,12 +1,12 @@
 var Items = require('../models/Item');
 var fs = require('fs');
-var imgPath = '/Users/Siva Cheerla/Downloads/img1.jpg';
+var imgPath = '/Users/Siva Cheerla/Downloads/img4.jpg';
 
 module.exports = {
 
     // Get all items based on foodcourt id, ex: foodcourt 1100
     getAllItems: function (req, res, next) {
-        Items.find({ foodcourt_id: 1100 }, function (err, response) {
+        Items.find({ foodcourt_id: req.params.id }, function (err, response) {
             if (err) {
                 console.log(err);
             } else {
@@ -55,7 +55,7 @@ module.exports = {
                 var maxId;
                 console.log("Finding max id...");
                 if (response.length == 0) {
-                    maxId = Number(11001);
+                    maxId = Number(1100 + "1");
                 } else {
                     maxId = Number(response[0].id) + 1;
                 }
@@ -63,9 +63,9 @@ module.exports = {
                 var newItem = new Items({
                     id: maxId,
                     foodcourt_id: 1100,
-                    name: 'Butter Chicken',
-                    price: '$150',
-                    availability: 'Available!',
+                    name: req.body.name,
+                    price: req.body.price,
+                    availability: req.body.availability,
                     img: {
                         data: fs.readFileSync(imgPath),
                         contentType: 'image/jpg'
@@ -90,9 +90,9 @@ module.exports = {
             id: req.params.id
         }, {
                 $set: {
-                    name: 'Chicken Sandwich',
-                    price: '$150',
-                    availability: 'Available!',
+                    name: req.body.name,
+                    price: req.body.price,
+                    availability: req.body.availability,
                     img: {
                         data: fs.readFileSync(imgPath),
                         contentType: 'image/jpg'

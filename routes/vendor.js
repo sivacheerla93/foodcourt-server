@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var itemsApi = require('../data/ItemsApi');
 
-// Get all items route
-router.get('/items', function (req, res, next) {
+// Get all items route for selected foodcourt
+router.get('/items/foodcourt/:id', function (req, res, next) {
     itemsApi.getAllItems(req, res, next);
 });
 
