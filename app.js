@@ -10,6 +10,7 @@ var mongoose = require('./models/Mongoose');
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var vendorRouter = require('./routes/vendor');
+var consumerRouter = require('./routes/consumer');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/vendor', vendorRouter);
+app.use('/consumer', consumerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
