@@ -8,10 +8,7 @@ const ItemSchema = new Schema({
     name: String,
     price: String,
     availability: String,
-    img: {
-        data: Buffer,
-        contentType: String
-    }
+    img: String
 });
 
 var Item = mongoose.model('Item', ItemSchema, 'manage_items');

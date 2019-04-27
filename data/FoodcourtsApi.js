@@ -1,8 +1,8 @@
 var Foodcourts = require('../models/Foodcourt');
+var Orders = require('../models/Order');
+var Items = require('../models/Item');
 var bcrypt = require('bcrypt');
 var BCRYPT_SALT_ROUNDS = 12;
-var fs = require('fs');
-var imgPath = '/Users/Siva Cheerla/Downloads/img2.jpg';
 
 module.exports = {
 
@@ -13,14 +13,6 @@ module.exports = {
                 console.log(err);
             } else {
                 console.log("Getting all foodcourts...");
-                // getting image
-                // res.contentType(response[0].img.contentType);
-                // res.send(response[0].img.data);
-
-                // res.send(response[0].id + " " + response[0].name + " " + response[0].gst + " " +
-                //     response[0].validity + " " + response[0].contact.email + " " +
-                //     response[0].contact.mobile + " " + response[0].password + " " +
-                //     response[0].address.locality + " " + response[0].address.city);
                 res.json(response);
             }
         })
@@ -33,14 +25,6 @@ module.exports = {
                 console.log(err);
             } else {
                 console.log("Getting foodcourt by ID...");
-                // getting image
-                // res.contentType(response[0].img.contentType);
-                // res.send(response[0].img.data);
-
-                // res.send(response[0].id + " " + response[0].name + " " + response[0].gst + " " +
-                //     response[0].validity + " " + response[0].contact.email + " " +
-                //     response[0].contact.mobile + " " + response[0].password + " " +
-                //     response[0].address.locality + " " + response[0].address.city);
                 res.json(response);
             }
         })
@@ -77,10 +61,7 @@ module.exports = {
                             locality: req.body.locality,
                             city: req.body.city
                         },
-                        img: {
-                            data: fs.readFileSync(imgPath),
-                            contentType: 'image/jpg'
-                        }
+                        img: req.body.img
                     });
                 }).then(function (newFoodcourt) {
                     newFoodcourt.save(function (err, response) {
@@ -115,10 +96,7 @@ module.exports = {
                             locality: req.body.locality,
                             city: req.body.city
                         },
-                        img: {
-                            data: fs.readFileSync(imgPath),
-                            contentType: 'image/jpg'
-                        }
+                        img: req.body.img
                     }
                 }, function (err, response) {
                     if (err) {
@@ -132,17 +110,33 @@ module.exports = {
         });
     },
 
-    // Deleting an existing foodcourt
+    // Deleting an existing foodcourt that includes live orders and items
     deleteFoodcourt: function (req, res, next) {
-        Foodcourts.findOneAndDelete({
-            id: Number(req.params.id)
-        }, function (err, response) {
-            if (err)
+        Orders.deleteMany({ foodcourt_id: req.params.id }, function (err, response) {
+            if (err) {
                 return console.log(err);
-            else {
-                console.log('Deleting Foodcourt by ID...');
-                res.json(response.id);
+            } else {
+                console.log('Deleting all existing orders for current foodcourt...');
             }
+        }).then(function () {
+            Items.deleteMany({ foodcourt_id: req.params.id }, function (err, response) {
+                if (err) {
+                    return console.log(err);
+                } else {
+                    console.log('Deleting all available items for current foodcourt...');
+                }
+            }).then(function () {
+                Foodcourts.findOneAndDelete({
+                    id: Number(req.params.id)
+                }, function (err, response) {
+                    if (err)
+                        return console.log(err);
+                    else {
+                        console.log('Deleting Foodcourt by ID...');
+                        res.json(response.id);
+                    }
+                });
+            });
         });
     }
 }

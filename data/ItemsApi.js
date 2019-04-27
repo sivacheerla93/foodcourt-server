@@ -1,6 +1,4 @@
 var Items = require('../models/Item');
-var fs = require('fs');
-var imgPath = '/Users/Siva Cheerla/Downloads/img4.jpg';
 
 module.exports = {
 
@@ -11,14 +9,6 @@ module.exports = {
                 console.log(err);
             } else {
                 console.log("Getting all items...");
-                // getting image
-                // res.contentType(response[0].img.contentType);
-                // res.send(response[0].img.data);
-
-                // res.send(response[0].id + " " + response[0].name + " " + response[0].gst + " " +
-                //     response[0].validity + " " + response[0].contact.email + " " +
-                //     response[0].contact.mobile + " " + response[0].password + " " +
-                //     response[0].address.locality + " " + response[0].address.city);
                 res.json(response);
             }
         })
@@ -31,14 +21,6 @@ module.exports = {
                 console.log(err);
             } else {
                 console.log("Getting item by ID...");
-                // getting image
-                // res.contentType(response[0].img.contentType);
-                // res.send(response[0].img.data);
-
-                // res.send(response[0].id + " " + response[0].name + " " + response[0].gst + " " +
-                //     response[0].validity + " " + response[0].contact.email + " " +
-                //     response[0].contact.mobile + " " + response[0].password + " " +
-                //     response[0].address.locality + " " + response[0].address.city);
                 res.json(response);
             }
         })
@@ -66,10 +48,7 @@ module.exports = {
                     name: req.body.name,
                     price: req.body.price,
                     availability: req.body.availability,
-                    img: {
-                        data: fs.readFileSync(imgPath),
-                        contentType: 'image/jpg'
-                    }
+                    img: req.body.img
                 });
 
                 newItem.save(function (err, response) {
@@ -93,10 +72,7 @@ module.exports = {
                     name: req.body.name,
                     price: req.body.price,
                     availability: req.body.availability,
-                    img: {
-                        data: fs.readFileSync(imgPath),
-                        contentType: 'image/jpg'
-                    }
+                    img: req.body.img
                 }
             }, function (err, response) {
                 if (err) {

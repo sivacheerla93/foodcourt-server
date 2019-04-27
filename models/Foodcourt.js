@@ -16,10 +16,7 @@ const FoodcourtSchema = new Schema({
         locality: String,
         city: String
     },
-    img: {
-        data: Buffer,
-        contentType: String
-    }
+    img: String
 });
 
 var Foodcourts = mongoose.model('Foodcourts', FoodcourtSchema, 'manage_foodcourts');
