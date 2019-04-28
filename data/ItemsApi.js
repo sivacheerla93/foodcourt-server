@@ -28,7 +28,7 @@ module.exports = {
 
     // Adding new item to the current foodcourt, ex: foodcourt 1100
     addNewItem: function (req, res, next) {
-        Items.find({ foodcourt_id: 1100 }).sort({
+        Items.find({ foodcourt_id: req.body.foodcourt_id }).sort({
             id: -1
         }).limit(1).exec(function (err, response) {
             if (err) {
@@ -37,14 +37,14 @@ module.exports = {
                 var maxId;
                 console.log("Finding max id...");
                 if (response.length == 0) {
-                    maxId = Number(1100 + "1");
+                    maxId = Number(req.body.foodcourt_id + "1");
                 } else {
                     maxId = Number(response[0].id) + 1;
                 }
 
                 var newItem = new Items({
                     id: maxId,
-                    foodcourt_id: 1100,
+                    foodcourt_id: req.body.foodcourt_id,
                     name: req.body.name,
                     price: req.body.price,
                     availability: req.body.availability,

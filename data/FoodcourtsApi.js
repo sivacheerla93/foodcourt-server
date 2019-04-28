@@ -6,6 +6,31 @@ var BCRYPT_SALT_ROUNDS = 12;
 
 module.exports = {
 
+    // Validate vendor
+    validateVendor: function (req, res, next) {
+        Foodcourts.find({ id: Number(req.body.fId) }, function (err, response) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (response.length == 0) {
+                    console.log('Vendor not found!');
+                    res.json({ status: "not found", fId: req.body.fId });
+                } else if (Number(req.body.fId) == response[0].id) {
+                    if (bcrypt.compareSync(req.body.pwd, response[0].password)) {
+                        console.log('Validated!');
+                        res.json({ status: "valid", fId: Number(response[0].id) });
+                    } else {
+                        console.log('Invalid password!');
+                        res.json({ status: "invalid", fId: Number(response[0].id) });
+                    }
+                } else {
+                    console.log('Some problem occured!');
+                    res.json({ status: "some problem" });
+                }
+            }
+        });
+    },
+
     // Get all foodcourts
     getAllFoodcourts: function (req, res, next) {
         Foodcourts.find({}, function (err, response) {
