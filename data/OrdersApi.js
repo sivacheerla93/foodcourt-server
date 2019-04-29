@@ -1,4 +1,5 @@
 var Orders = require('../models/Order');
+var Mail = require('../mail/MailApi');
 
 module.exports = {
 
@@ -11,7 +12,7 @@ module.exports = {
                 console.log("Getting all orders...");
                 res.json(response);
             }
-        })
+        });
     },
 
     // Creating new order to the current foodcourt, ex: foodcourt 1100
@@ -70,6 +71,27 @@ module.exports = {
                     console.log('Finalizing order by ID...');
                     res.json(response.id);
                 }
+            }).then(function () {
+                Orders.findOne({ id: req.params.id }, function (err, response) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('Getting order details to send mail!');
+                    }
+                }).then(function (response) {
+                    var subject = 'Your order is successful!: ' + response.id;
+                    var body = '<h4>Hello ' + response.delivery.name + '!' + '</h4><p>Thank you for making an order with '
+                        + response.foodcourt_id + '</p>' +
+                        '<p><u>Find your order details below.</u></p>' +
+                        '<table>' + response.description + '</table>' +
+                        '<p><u>Delivery address:</u></p>' +
+                        '<div>' + response.delivery.name + '<br />' +
+                        response.delivery.mobile + '<br />' +
+                        response.delivery.email + '<br />' +
+                        response.delivery.locality + '<br />' +
+                        response.delivery.city + '</div>';
+                    Mail.sendMail(req.body.email, subject, body);
+                });
             });
     },
 }
