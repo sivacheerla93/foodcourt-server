@@ -6,11 +6,13 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var mongoose = require('./models/Mongoose');
+const pug = require('pug');
 
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var vendorRouter = require('./routes/vendor');
 var consumerRouter = require('./routes/consumer');
+var payment = require('./payment/PaymentApi');
 
 var app = express();
 
@@ -32,12 +34,25 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug')
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
+
 app.use('/admin', adminRouter);
 app.use('/vendor', vendorRouter);
 app.use('/consumer', consumerRouter);
+
+app.get('/callPaymentPage/:oid', ((req, res) => {
+  payment.callPaymentPage(req, res);
+}));
+
+app.post("/charge/:oid", function (req, res) {
+  payment.chargeCustomer(req, res);
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

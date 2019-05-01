@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const OrderSchema = new Schema({
     id: Number,
     foodcourt_id: Number,
+    fname: String,
     description: String,
+    amount: Number,
     delivery: {
         name: String,
         mobile: String,

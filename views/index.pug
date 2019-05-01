@@ -1,0 +1,11 @@
+html
+  body
+    center
+      form(action="/charge/"+oid, method="post")
+        script(
+        src="//checkout.stripe.com/v2/checkout.js",
+        class="stripe-button",
+        data-key=keyPublishable,
+        data-locale="auto",
+        data-description=fname,
+        data-amount=amount)
