@@ -8,7 +8,6 @@ var cors = require('cors');
 var mongoose = require('./models/Mongoose');
 const pug = require('pug');
 
-var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var vendorRouter = require('./routes/vendor');
 var consumerRouter = require('./routes/consumer');
@@ -39,8 +38,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug')
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-//app.use('/', indexRouter);
 
 app.use('/admin', adminRouter);
 app.use('/vendor', vendorRouter);

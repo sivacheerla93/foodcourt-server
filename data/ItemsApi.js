@@ -11,7 +11,7 @@ module.exports = {
                 console.log("Getting all items...");
                 res.json(response);
             }
-        })
+        });
     },
 
     // Get single item by ID
@@ -23,7 +23,7 @@ module.exports = {
                 console.log("Getting item by ID...");
                 res.json(response);
             }
-        })
+        });
     },
 
     // Adding new item to the current foodcourt, ex: foodcourt 1100
