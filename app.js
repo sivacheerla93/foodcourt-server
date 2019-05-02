@@ -12,8 +12,13 @@ var adminRouter = require('./routes/admin');
 var vendorRouter = require('./routes/vendor');
 var consumerRouter = require('./routes/consumer');
 var payment = require('./payment/PaymentApi');
+var userRoute = require('./routes/user');
+var verifyroute = require('./routes/verifyuser')
+var jwt = require('jsonwebtoken');
 
 var app = express();
+
+app.set('secretKey', 'Foodcourt');
 
 // establishing connection
 mongoose.on('error', function (err) {
@@ -42,6 +47,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRouter);
 app.use('/vendor', vendorRouter);
 app.use('/consumer', consumerRouter);
+app.use('/user', userRoute);
+app.use('/user/loginverify', validateUser, verifyroute);
 
 app.get('/callPaymentPage/:oid', ((req, res) => {
   payment.callPaymentPage(req, res);
@@ -55,6 +62,20 @@ app.post("/charge/:oid", function (req, res) {
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
+function validateUser(req, res, next) {
+  jwt.verify(req.body.token, req.app.get('secretKey'), function (err, decoded) {
+    if (err) {
+      res.json({ status: "error", message: err.message, app: null });
+    } else {
+      //console.log(req.headers['x-access-token']);
+      // add user id to request
+      req.body.id = decoded.id;
+      console.log(decoded.id)
+      next();
+    }
+  });
+}
 
 // error handler
 app.use(function (err, req, res, next) {

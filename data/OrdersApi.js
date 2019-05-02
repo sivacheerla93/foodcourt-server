@@ -8,6 +8,7 @@ module.exports = {
                 console.log(err);
             } else {
                 console.log("Getting all orders...");
+                console.log(response);
                 res.json(response);
             }
         });
@@ -42,7 +43,8 @@ module.exports = {
                         console.log(err);
                     } else {
                         console.log('Creating new order...');
-                        res.json(response.id);
+                        //res.json(response.id);
+                        res.json({ status: "success", idval: response.id });
                     }
                 });
             }
