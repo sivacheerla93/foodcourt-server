@@ -13,18 +13,14 @@ module.exports = {
                 console.log(err);
             } else {
                 if (response.length == 0) {
-                    console.log('Vendor not found!');
                     res.json({ status: "not found", fId: req.body.fId });
                 } else if (Number(req.body.fId) == response[0].id) {
                     if (bcrypt.compareSync(req.body.pwd, response[0].password)) {
-                        console.log('Validated!');
                         res.json({ status: "valid", fId: Number(response[0].id) });
                     } else {
-                        console.log('Invalid password!');
                         res.json({ status: "invalid", fId: Number(response[0].id) });
                     }
                 } else {
-                    console.log('Some problem occured!');
                     res.json({ status: "some problem" });
                 }
             }
@@ -37,7 +33,6 @@ module.exports = {
             if (err) {
                 console.log(err);
             } else {
-                console.log("Getting all foodcourts...");
                 res.json(response);
             }
         })
@@ -49,7 +44,6 @@ module.exports = {
             if (err) {
                 console.log(err);
             } else {
-                console.log("Getting foodcourt by ID...");
                 res.json(response);
             }
         })
@@ -64,7 +58,6 @@ module.exports = {
                 console.log(err);
             } else {
                 var maxId;
-                console.log("Finding max id...");
                 if (response.length == 0) {
                     maxId = Number(1100);
                 } else {
@@ -93,7 +86,6 @@ module.exports = {
                         if (err) {
                             console.log(err);
                         } else {
-                            console.log('Creating Foodcourt...');
                             res.json(response.id);
                         }
                     });
@@ -128,7 +120,6 @@ module.exports = {
                         console.log(err);
                     }
                     else {
-                        console.log('Updating foodcourt by ID...');
                         res.json(response.id);
                     }
                 });
@@ -141,14 +132,12 @@ module.exports = {
             if (err) {
                 return console.log(err);
             } else {
-                console.log('Deleting all existing orders for current foodcourt...');
             }
         }).then(function () {
             Items.deleteMany({ foodcourt_id: req.params.id }, function (err, response) {
                 if (err) {
                     return console.log(err);
                 } else {
-                    console.log('Deleting all available items for current foodcourt...');
                 }
             }).then(function () {
                 Foodcourts.findOneAndDelete({
@@ -157,7 +146,6 @@ module.exports = {
                     if (err)
                         return console.log(err);
                     else {
-                        console.log('Deleting Foodcourt by ID...');
                         res.json(response.id);
                     }
                 });

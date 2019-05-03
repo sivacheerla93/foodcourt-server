@@ -7,8 +7,6 @@ module.exports = {
             if (err) {
                 console.log(err);
             } else {
-                console.log("Getting all orders...");
-                console.log(response);
                 res.json(response);
             }
         });
@@ -23,7 +21,6 @@ module.exports = {
                 console.log(err);
             } else {
                 var maxId;
-                console.log("Finding max id...");
                 if (response.length == 0) {
                     maxId = Number(req.body.foodcourt_id + "100");
                 } else {
@@ -42,8 +39,6 @@ module.exports = {
                     if (err) {
                         console.log(err);
                     } else {
-                        console.log('Creating new order...');
-                        //res.json(response.id);
                         res.json({ status: "success", idval: response.id });
                     }
                 });
@@ -70,7 +65,6 @@ module.exports = {
                     console.log(err);
                 }
                 else {
-                    console.log('Finalizing order by ID...');
                     res.json(response.id);
                 }
             });

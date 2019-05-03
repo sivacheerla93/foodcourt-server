@@ -58,7 +58,7 @@ module.exports = {
                                 'Billing details: ' + charge.billing_details.name + '<br />' +
                                 'Download receipt: ' + charge.receipt_url + '</div>';
                             Mail.sendMail(response.delivery.email, subject, body);
-                            res.redirect('/');
+                            res.render('success');
                         }
                     );
             }

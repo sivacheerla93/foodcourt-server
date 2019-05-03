@@ -68,10 +68,7 @@ function validateUser(req, res, next) {
     if (err) {
       res.json({ status: "error", message: err.message, app: null });
     } else {
-      //console.log(req.headers['x-access-token']);
-      // add user id to request
       req.body.id = decoded.id;
-      console.log(decoded.id)
       next();
     }
   });

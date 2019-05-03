@@ -1,0 +1,18 @@
+html
+  head
+    link(href="/stylesheets/bootstrap.min.css", rel="stylesheet")
+    script.
+      function myFunction() {
+      window.location.href = "/";
+      }
+  body
+    .alert.alert-success.text-center(role='alert', style='margin: 30px;')
+      h3
+        | Your order has been successfully placed!
+        br
+        | Check your email address for further details!!
+      br
+      br
+      br
+      button.btn.btn-lg.btn-block.btn-success.text-uppercase(onclick='myFunction();') Click here to go back for homepage
+

@@ -1,6 +1,17 @@
 html
+  head
+    link(href="/stylesheets/bootstrap.min.css", rel="stylesheet")
   body
     center
+      .alert.alert-info.text-center(role='alert', style='margin: 30px;')
+        h3
+          | Hello! We're accepting payments through cards only!!
+          br
+          | You can pay using any debit (or) credit card.
+      
+      br
+      br
+      
       form(action="/charge/"+oid, method="post")
         script(
         src="//checkout.stripe.com/v2/checkout.js",

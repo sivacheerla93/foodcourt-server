@@ -9,5 +9,4 @@ router.post('/register', function (req, res, next) {
     Users.create(req, res, next);
 });
 
-
 module.exports = router;
