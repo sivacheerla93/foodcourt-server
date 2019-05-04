@@ -6,15 +6,15 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var mongoose = require('./models/Mongoose');
-const pug = require('pug');
+var pug = require('pug');
+var jwt = require('jsonwebtoken');
 
 var adminRouter = require('./routes/admin');
 var vendorRouter = require('./routes/vendor');
 var consumerRouter = require('./routes/consumer');
-var payment = require('./payment/PaymentApi');
 var userRoute = require('./routes/user');
-var verifyroute = require('./routes/verifyuser')
-var jwt = require('jsonwebtoken');
+var verifyroute = require('./routes/verifyUser');
+var payment = require('./payment/PaymentApi');
 
 var app = express();
 
@@ -28,7 +28,7 @@ mongoose.once('open', function () {
   console.log('Connected to DB.');
 });
 
-app.use(cors());
+//app.use(cors());
 
 app.use(logger('dev'));
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -58,11 +58,6 @@ app.post("/charge/:oid", function (req, res) {
   payment.chargeCustomer(req, res);
 });
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-
 function validateUser(req, res, next) {
   jwt.verify(req.body.token, req.app.get('secretKey'), function (err, decoded) {
     if (err) {
@@ -73,6 +68,11 @@ function validateUser(req, res, next) {
     }
   });
 }
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function (err, req, res, next) {

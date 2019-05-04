@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Users = require('../data/users');
+var Users = require('../data/UsersApi');
 
 router.post('/verify', function (req, res, next) {
     if (req.body.id == null) {
@@ -9,6 +9,5 @@ router.post('/verify', function (req, res, next) {
         Users.getUser(req, res, next);
     }
 });
-
 
 module.exports = router;

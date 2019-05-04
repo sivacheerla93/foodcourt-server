@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Users = require('../data/users');
+var Users = require('../data/UsersApi');
 
 router.post('/authenticate', function (req, res, next) {
     Users.authenticate(req, res, next);
