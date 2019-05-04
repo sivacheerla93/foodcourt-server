@@ -13,7 +13,7 @@ var adminRouter = require('./routes/admin');
 var vendorRouter = require('./routes/vendor');
 var consumerRouter = require('./routes/consumer');
 var userRoute = require('./routes/user');
-var verifyroute = require('./routes/verifyUser');
+var verifyroute = require('./routes/authenticateUser');
 var payment = require('./payment/PaymentApi');
 
 var app = express();
