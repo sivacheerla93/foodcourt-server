@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('foodcourt-server-siva:server');
+var debug = require('debug')('foodcourt-server:server');
 var http = require('http');
 
 /**
